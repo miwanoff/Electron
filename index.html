@@ -1,19 +1,46 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
     <title>Hello World!</title>
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-bundle.js"></script>
+    <script src="https://unpkg.com/tone"></script>
+    <script src="https://unpkg.com/@tonejs/ui"></script>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+    <tone-demo autoplay>
+      <tone-keyboard octaves="2"></tone-keyboard>
+    </tone-demo>
 
+    <h1>Hello World!</h1>
+    We are using Node.js <span id="node-version"></span>, Chromium
+    <span id="chrome-version"></span>, and Electron
+    <span id="electron-version"></span>.
+    <div class="audio">
+      <audio src="sounds/C.mp3" id="A" preload="auto" controls></audio>
+    </div>
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
+    <script src="./functions.js"></script>
+    <script>
+      const synth = new Tone.AMSynth().toMaster();
+
+      //attach a listener to the keyboard events
+      document
+        .querySelector("tone-keyboard")
+        .addEventListener("noteon", (e) => {
+          encodeURIComponent;
+          synth.triggerAttack(e.detail.name);
+        });
+
+      document
+        .querySelector("tone-keyboard")
+        .addEventListener("noteoff", (e) => {
+          synth.triggerRelease();
+        });
+    </script>
   </body>
 </html>
